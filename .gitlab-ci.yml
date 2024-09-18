@@ -1,0 +1,26 @@
+# Define the stages of the pipeline
+stages:
+  - build
+  - test
+
+# Build stage
+build_job:
+  stage: build
+  script:
+    - echo "Building the project..."
+  # Only run this job for merge requests and main branch
+  rules:
+    - if: '$CI_MERGE_REQUEST_ID' # This will trigger the job for merge requests
+
+
+# Test stage
+test_job:
+  stage: test
+  script:
+    - echo "Running tests..."
+  # Make this job dependent on the build stage
+  needs:
+    - build_job
+  # Only run this job for merge requests and main branch
+  rules:
+    - if: '$CI_MERGE_REQUEST_ID' # This will trigger the job for merge requests
