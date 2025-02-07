@@ -1,0 +1,6 @@
+# This file is read by  
+# UV project manager.
+# Here we specify python 
+# versiom that UV will 
+# create and use.
+3.12
