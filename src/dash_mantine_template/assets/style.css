@@ -1,0 +1,5 @@
+/* Hide the default Dash loading message */
+._dash-loading {
+    display: none !important;
+}
+
