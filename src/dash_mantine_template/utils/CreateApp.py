@@ -39,6 +39,7 @@ def create_app() -> dash.Dash:
         # while app is instantiated in child folder.
         pages_folder="../",
         server=flask_server,
+        assets_folder="../"
     )
 
     dash_app.layout = layout()
