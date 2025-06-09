@@ -63,24 +63,24 @@ uv sync --dev
 ## How to run ruff linter?
 
 ```text
-ruff check
+uv run ruff check
 ```
 
 # Linter fix
 ```text
-ruff check --fix
+uv run ruff check --fix
 ```
 
 ## How to run ruff formatter? 
 
 ```text
-ruff format
+uv run ruff format
 ```
 
 ## How to sort imports?
 
 ```text
-ruff check --select I --fix
+uv run ruff check --select I --fix
 ```
 
 ## What code quality steps should be done before each commit?
