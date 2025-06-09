@@ -30,4 +30,7 @@ def mantine_provider(content: List) -> dmc.MantineProvider:
 
     :return: dmc.MantineProvider component.
     """
-    return dmc.MantineProvider(children=content)
+    return dmc.MantineProvider(
+        children=content,
+        forceColorScheme="dark",
+    )

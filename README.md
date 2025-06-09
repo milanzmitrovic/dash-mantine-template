@@ -66,20 +66,15 @@ uv sync --dev
 ruff check
 ```
 
+# Linter fix
+```text
+ruff check --fix
+```
+
 ## How to run ruff formatter? 
 
 ```text
 ruff format
-```
-
-# Linter check
-```text
-ruff check
-```
-
-# Linter fix
-```text
-ruff check --fix
 ```
 
 ## How to sort imports?

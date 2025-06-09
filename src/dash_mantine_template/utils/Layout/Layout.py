@@ -8,6 +8,9 @@ from dash import dcc
 from pydantic import ConfigDict, validate_call
 
 from dash_mantine_template.component_ids.utils.Layout.Layout import location_url__id
+from dash_mantine_template.components.containers.dummy_outputs.DummyOutputs import (
+    dummy_outputs,
+)
 
 from .utils.app_shell.AppShell import app_shell
 from .utils.app_shell.Header import header_component
@@ -42,6 +45,7 @@ def layout() -> dmc.MantineProvider:
     return mantine_provider(
         content=[
             dcc.Location(id=location_url__id.id),
+            dummy_outputs(),
             app_shell(
                 content=[
                     main_component(),

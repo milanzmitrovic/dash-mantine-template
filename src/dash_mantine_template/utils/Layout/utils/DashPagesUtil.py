@@ -73,14 +73,14 @@ def page_navigation_tab(name: str, link: str) -> dcc.Link:
 
 
 @validate_call(config=ConfigDict(arbitrary_types_allowed=True), validate_return=True)
-def page_navigation_component() -> html.Div:
+def page_navigation_component() -> dmc.Container:
     """
     Purpose of this function is to create component that
     will hold TABs and display them to user.
 
     return: htm.Div containing component.
     """
-    return html.Div(
+    return dmc.Container(
         [
             html.Br(),
             html.Br(),
@@ -103,7 +103,10 @@ def page_navigation_component() -> html.Div:
                 variant="default",  # or "outline" or "pills"
                 value="/",  # Active TAB by default
             ),
-        ]
+        ],
+        # When new pages are added,
+        # size should be increased.
+        size=195,
     )
 
 
