@@ -12,6 +12,7 @@ from dash_mantine_template.component_ids.containers.DummyOutputs import (
 from dash_mantine_template.component_ids.miscellaneous.ThemeSwitch import (
     ThemeSwitchComponent,
 )
+from dash_mantine_template.utils.logging.Logger import logger
 
 
 def theme_switch():
@@ -87,6 +88,11 @@ def on_theme_change(input_: Theme):
     true --> dark
 
     """
-    print(input_)
-    print(type(input_))
+    logger.info(input_)
+    logger.critical(111)
+    logger.info(222)
+    logger.warning(3333)
+    logger.error(4444)
+    logger.debug(7777)
+
     return f"[{input_}]"

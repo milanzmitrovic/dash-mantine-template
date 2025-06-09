@@ -18,7 +18,8 @@ def main():
 
     # Open file that is holding initial
     # html of page.
-    # It is loaded on page refresh.
+    # It is loaded on page refresh in
+    # browser for less than 1 second.
     with open(
         "src/dash_mantine_template/components/miscellaneous/InitialTheme.html",
         "r",
