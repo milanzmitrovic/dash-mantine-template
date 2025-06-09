@@ -47,7 +47,7 @@ def test__page_navigation_component():
     tabs showing pages in itself.
     """
 
-    assert isinstance(page_navigation_component(), html.Div)
+    assert isinstance(page_navigation_component(), dmc.Container)
 
 
 # --- --- --- #
