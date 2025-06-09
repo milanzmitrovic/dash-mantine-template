@@ -1,0 +1,54 @@
+        <!-- 
+         
+        Purpose of this file if to be 
+        loaded on initial page load.
+        
+        -->
+        
+        
+        <!DOCTYPE html>
+        <html>
+        <head>
+            {%metas%}
+            <title>{%title%}</title>
+            {%favicon%}
+            {%css%}
+            <script>
+
+                // Purpose of this function is to preload background color 
+                // of entire page before Mantine theme provider is ready.
+
+                // When page is reloaded, it becomes entirely white for 
+                // 1 second.
+
+                // So, ecternal CSS files are loaded depending on color 
+                // that is saved in user's browser.
+
+                // This files are later on deleted when user chooses to 
+                // change background theme. If not deleted, they will 
+                // messup with Mantine CSS theme styles.
+
+                // Deletion is done in clientside component.
+            
+                (function () {
+
+                    // If key with name "_dash_persistence.color-scheme-switch1.checked.true" is not present, 
+                    // then it will be treated as if it has value of "[true]".
+                    const theme = localStorage.getItem('_dash_persistence.color-scheme-switch1.checked.true') || 'true';
+                    const link = document.createElement('link');
+                    link.rel = 'stylesheet';
+                    link.href = theme === '[true]' ? '/assets/dark.css' : '/assets/light.css';
+                    document.head.appendChild(link);
+                })();
+
+            </script>
+        </head>
+        <body>
+            {%app_entry%}
+            <footer>
+            {%config%}
+            {%scripts%}
+            {%renderer%}
+            </footer>
+        </body>
+        </html>

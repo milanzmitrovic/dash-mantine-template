@@ -1,8 +1,3 @@
-/* Hide the default Dash loading message */
-._dash-loading {
-    display: none !important;
-}
-
 /* Purpose of --universal-color Mantine
 CSS variable is to have unique color of 
 element regardless of background theme 

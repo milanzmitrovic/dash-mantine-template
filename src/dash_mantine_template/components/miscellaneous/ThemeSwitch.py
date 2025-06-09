@@ -42,6 +42,22 @@ clientside_callback(
         // of HTML scheme.
         document.documentElement.setAttribute('data-mantine-color-scheme', switchOn ? 'light' : 'dark');
 
+
+        // Purpose of this part is to remove CSS files that 
+        // has been preloaded when page is being refreshed.
+        // Those CSS files are only necessary when refreshing 
+        // page in order to to remove WHITE/BLACK background in 
+        // browser untill Mantine style/theme is loaded.
+        const cssFilesToRemove = ['dark.css', 'light.css'];
+        const links = document.querySelectorAll('link[rel="stylesheet"]');
+        links.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && cssFilesToRemove.some(file => href.includes(file))) {
+            link.parentNode.removeChild(link);
+            console.log(`Removed: ${href}`);
+            }
+        });
+
         // This is just due to sth must be returned 
         // by Dash callback as per design.
        return window.dash_clientside.no_update
