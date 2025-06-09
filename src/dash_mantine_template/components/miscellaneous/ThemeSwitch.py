@@ -12,6 +12,7 @@ from dash_mantine_template.component_ids.containers.DummyOutputs import (
 from dash_mantine_template.component_ids.miscellaneous.ThemeSwitch import (
     ThemeSwitchComponent,
 )
+from dash_mantine_template.utils.database.SqlAlchemy import sql_connector
 from dash_mantine_template.utils.logging.Logger import logger
 
 
@@ -88,7 +89,7 @@ def on_theme_change(input_: Theme):
     true --> dark
 
     """
-    # This is example how logging 
+    # This is example how logging
     # should be used in project template.
     logger.info(input_)
     logger.critical(111)
@@ -96,5 +97,58 @@ def on_theme_change(input_: Theme):
     logger.warning(3333)
     logger.error(4444)
     logger.debug(7777)
+
+    ddl_statement = """
+
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY,
+                name TEXT,
+                age INTEGER
+            )
+                
+    """
+    result_ = sql_connector.ddl_statement(ddl_query=ddl_statement)
+    print(result_)
+    # --- --- --- #
+
+    create_statement = "INSERT INTO users (name, age) VALUES (:name, :age)"
+    create_params = {"name": "Alice", "age": 30}
+
+    result_c = sql_connector.create_statement(
+        sql_query=create_statement, parameters=create_params
+    )
+    print(result_c.rowcount)
+
+    # --- --- --- #
+
+    read_query = "SELECT * FROM users where name = :name"
+    read_params = {"name": "Alice"}
+
+    result_r = sql_connector.read_statement(
+        sql_query=read_query, parameters=read_params
+    )
+    print(list(result_r.keys()))
+    for i in result_r:
+        print(i)
+
+    # --- --- --- #
+
+    update_query = "UPDATE users SET age = :age WHERE name = :name"
+    update_params = {"age": 40, "name": "Alice"}
+
+    result_u = sql_connector.update_statement(
+        sql_query=update_query, parameters=update_params
+    )
+    print(result_u.rowcount)
+
+    # --- --- --- #
+
+    delete_query = "DELETE FROM users WHERE name = :name"
+    delete_params = {"name": "Alice"}
+
+    result_d = sql_connector.delete_statement(
+        sql_query=delete_query, parameters=delete_params
+    )
+    print(result_d.rowcount)
 
     return f"[{input_}]"

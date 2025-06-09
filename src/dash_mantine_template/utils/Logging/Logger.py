@@ -1,14 +1,14 @@
-""" 
-Purpose of this file is to organize 
-logic related to logging functionality 
+"""
+Purpose of this file is to organize
+logic related to logging functionality
 of application.
 
-There is Logging class and logger 
+There is Logging class and logger
 object instantiated in this file.
 
-Object logger should be used throughout 
-application for logging. It has all 
-necessary methods for performing 
+Object logger should be used throughout
+application for logging. It has all
+necessary methods for performing
 logs.
 
 """
