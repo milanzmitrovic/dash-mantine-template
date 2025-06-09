@@ -15,6 +15,21 @@ def main():
     start entire application.
     """
     app = create_app()
+
+    # Open file that is holding initial
+    # html of page.
+    # It is loaded on page refresh.
+    with open(
+        "src/dash_mantine_template/components/miscellaneous/InitialTheme.html",
+        "r",
+        encoding="utf-8",
+    ) as file:
+        html_string = file.read()
+
+    # Add html that should be loaded
+    # on initial page refresh.
+    app.index_string = html_string
+
     app.run()
 
 
