@@ -35,4 +35,9 @@ def main():
 
 
 if __name__ == "__main__":
+    # This part is necessary so that
+    # app can be run from IDE like
+    # PyCharm.
+    # Command: uv run dash-mantine-template
+    # does NOT need it.
     main()

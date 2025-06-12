@@ -17,6 +17,7 @@ dependencies = [
     "pandas>=2.2.3",
     "pip-audit>=2.9.0",
     "pydantic>=2.10.6",
+    "pyway>=0.3.32",
     "quantlib>=1.38",
     "sqlalchemy>=2.0.40",
     "yfinance>=0.2.61",

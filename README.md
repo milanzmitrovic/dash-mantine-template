@@ -85,10 +85,17 @@ uv run ruff check --select I --fix
 
 ## What code quality steps should be done before each commit?
 
-### 1. Run PyTest
-### 2. Sort imports
-### 3. Format code
-### 4. Lint code
+- Run PyTest
+- Sort imports
+- Format code
+- Lint code
+
+## Pyway migrations
+- INFO: uv run pyway info
+- VALIDATE: uv run pyway validate
+- MIGRATE: uv run pyway migrate
+- IMPORT: ...
+- CHECKSUM: ...
 
 
 # 2. How to develop product using project template?
