@@ -8,7 +8,7 @@ Mantine provider component.
 
 import dash_mantine_components as dmc
 
-from dash_mantine_template.utils.layout.utils.MantineProvider import mantine_provider
+from dash_mantine_template.utils.Layout.utils.MantineProvider import mantine_provider
 
 
 def test__mantine_provider():

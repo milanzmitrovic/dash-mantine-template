@@ -5,7 +5,7 @@ tests for database connections.
 
 import pytest
 
-from dash_mantine_template.utils.database.SqlAlchemy import (
+from dash_mantine_template.utils.Database.SqlAlchemy import (
     SqlConnector,  # adjust this import to your actual file
 )
 
