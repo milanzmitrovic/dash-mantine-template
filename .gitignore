@@ -12,3 +12,5 @@ wheels/
 .idea
 
 /temp
+
+.DS_Store

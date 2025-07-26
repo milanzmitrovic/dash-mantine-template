@@ -6,7 +6,7 @@ logic related with select component.
 from dash import Input, Output, callback, dcc, html
 from pydantic import ConfigDict, validate_call
 
-from dash_mantine_template.component_ids.filters.select_component import (
+from ...component_ids.filters.select_component import (
     SelectComponent__ID,
     SelectComponent__Property,
     output_component__id,

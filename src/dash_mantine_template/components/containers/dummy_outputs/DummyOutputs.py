@@ -14,7 +14,7 @@ in order to have them in one place.
 
 from dash import html
 
-from dash_mantine_template.component_ids.containers.DummyOutputs import (
+from ....component_ids.containers.DummyOutputs import (
     OnThemeChange,
     ThemeClientsideCallback,
 )

@@ -7,8 +7,8 @@ import dash_mantine_components as dmc
 from dash import dcc
 from pydantic import ConfigDict, validate_call
 
-from dash_mantine_template.component_ids.utils.Layout.Layout import location_url__id
-from dash_mantine_template.components.containers.dummy_outputs.DummyOutputs import (
+from ...component_ids.utils.Layout.Layout import location_url__id
+from ...components.containers.dummy_outputs.DummyOutputs import (
     dummy_outputs,
 )
 

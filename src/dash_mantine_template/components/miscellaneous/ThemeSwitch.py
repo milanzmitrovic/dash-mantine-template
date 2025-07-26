@@ -5,15 +5,15 @@ from dash import Input, Output, callback, clientside_callback
 from dash_iconify import DashIconify
 from pydantic import ConfigDict, validate_call
 
-from dash_mantine_template.component_ids.containers.DummyOutputs import (
+from ...component_ids.containers.DummyOutputs import (
     OnThemeChange,
     ThemeClientsideCallback,
 )
-from dash_mantine_template.component_ids.miscellaneous.ThemeSwitch import (
+from ...component_ids.miscellaneous.ThemeSwitch import (
     ThemeSwitchComponent,
 )
-from dash_mantine_template.utils.database.SqlAlchemy import sql_connector
-from dash_mantine_template.utils.logging.Logger import logger
+from ...utils.Database.SqlAlchemy import sql_connector
+from ...utils.Logging.Logger import logger
 
 
 def theme_switch():

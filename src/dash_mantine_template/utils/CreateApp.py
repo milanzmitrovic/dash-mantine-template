@@ -8,7 +8,7 @@ from dash import Dash
 from flask import Flask
 from pydantic import ConfigDict, validate_call
 
-from .layout.Layout import layout
+from .Layout.Layout import layout
 
 
 @validate_call(config=ConfigDict(arbitrary_types_allowed=True), validate_return=True)
