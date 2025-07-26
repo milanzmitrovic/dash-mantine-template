@@ -11,7 +11,7 @@ import os
 import tempfile
 import time
 
-from dash_mantine_template.utils.logging.Logger import (
+from dash_mantine_template.utils.Logging.Logger import (
     Logger,
 )  # Replace with actual import
 
