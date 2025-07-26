@@ -10,7 +10,7 @@ Top of the page.
 import dash_mantine_components as dmc
 from pydantic import ConfigDict, validate_call
 
-from dash_mantine_template.components.miscellaneous.ThemeSwitch import theme_switch
+from .....components.miscellaneous.ThemeSwitch import theme_switch
 
 
 @validate_call(config=ConfigDict(arbitrary_types_allowed=True), validate_return=True)
