@@ -3,13 +3,173 @@
 
 ## How to clone project?
 
-```text
+<details>
+
+<summary>Steps</summary>
+
+
+1. Clone project
+
+```bash
 git@gitlab.com:public-projects1853809/dash-mantine-template.git
 ```
 
-```text
+2. Change directory
+
+```bash
 cd dash-mantine-template
 ```
+
+3. Create necessary sub-directories
+
+```bash
+mkdir temp; 
+mkdir temp/logs;
+mkdir temp/sqlite_database;
+```
+
+4. Run app
+
+```bash
+uv run my-new-app
+```
+
+</details>
+
+## How to clone project under your project name?
+
+<details>
+
+<summary>Steps</summary>
+
+
+1. Create new package
+
+```bash
+uv init --package my-new-app
+```
+
+2. Clone dash-mantine-project
+
+```bash
+git clone git@gitlab.com:public-projects1853809/dash-mantine-template.git
+```
+
+3. Delete everything from folder my-new-app
+
+```bash
+cd my-new-app
+rm -rf *
+rm .gitignore
+rm .python-version
+```
+
+4. Copy everything from dash-mantine-project onto my-new-app folder
+
+5. Rename names in pyproject.toml file.
+
+```txt
+# Old
+
+name = "dash-mantine-template"
+authors = [
+    { name = "Milan Mitrovic", email = "milanmitrovic1991@gmail.com" }
+]
+[project.scripts]
+dash-mantine-template = "dash_mantine_template:main"
+```
+
+
+```txt
+# New
+
+name = "my-new-app"
+authors = [
+    { name = "Name Surname", email = "user@email.com" }
+]
+[project.scripts]
+my-new-app = "my_new_app:main"
+```
+
+```bash
+# rename source folder
+
+- mv src/dash_mantine_template/ src/my_new_app/
+
+```
+
+6. Rename imports in pages/ folder:
+
+```python
+# Old
+
+from dash_mantine_template.components.filters.radio_button
+import (
+    radio_button__component,
+)
+```
+
+```python
+# New
+
+from my_new_app.components.filters.radio_button import (
+    radio_button__component,
+)
+```
+
+7. Rename filepath to html template:
+
+```python
+# Old
+
+with open(
+        "src/dash_mantine_template/components/miscellaneous/InitialTheme.html",
+        "r",
+        encoding="utf-8",
+    ) as file:
+        html_string = file.read()
+```
+
+```python
+# New
+
+with open(
+    "src/my_new_app/components/miscellaneous/InitialTheme.html",
+        "r",
+        encoding="utf-8",
+    ) as file:
+        html_string = file.read()
+
+```
+
+8. Create necessary folders inside temp/ directory:
+
+```bash
+mkdir temp; 
+mkdir temp/logs;
+mkdir temp/sqlite_database;
+```
+
+
+9. Run app.
+
+```bash
+uv run my-new-app
+```
+
+
+10. Rename imports in tests/ folder:
+
+```bash
+
+find tests/ -type f -name "*.py" -exec sed -i '' 's/from my_new_app\./from dash_mantine_template./g' {} +
+
+
+```
+
+
+</details>
+
 
 ## How to sync project?
 
