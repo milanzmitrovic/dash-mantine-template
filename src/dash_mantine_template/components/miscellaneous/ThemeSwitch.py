@@ -100,11 +100,12 @@ def on_theme_change(input_: Theme):
 
     ddl_statement = """
 
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY,
-                name TEXT,
-                age INTEGER
-            )
+        CREATE TABLE IF NOT EXISTS users (
+            id SERIAL PRIMARY KEY,
+            name TEXT,
+            age INTEGER
+        );
+
                 
     """
     result_ = sql_connector.ddl_statement(ddl_query=ddl_statement)

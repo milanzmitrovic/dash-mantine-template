@@ -11,7 +11,6 @@ from ...component_ids.utils.layout.Layout import location_url__id
 from ...components.containers.dummy_outputs.DummyOutputs import (
     dummy_outputs,
 )
-
 from .utils.app_shell.AppShell import app_shell
 from .utils.app_shell.Header import header_component
 from .utils.app_shell.Main import main_component
