@@ -6,7 +6,7 @@ It is actually main file of entire application.
 
 """
 
-from .utils.CreateApp import create_app
+from dash_mantine_template.utils.CreateApp import create_app
 
 
 def main():
