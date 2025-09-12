@@ -14,3 +14,5 @@ wheels/
 /temp
 
 .DS_Store
+
+.env
