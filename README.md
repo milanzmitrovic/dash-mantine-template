@@ -11,7 +11,7 @@
 1. Clone project
 
 ```bash
-git@gitlab.com:public-projects1853809/dash-mantine-template.git
+git clone git@gitlab.com:public-projects1853809/dash-mantine-template.git
 ```
 
 2. Change directory

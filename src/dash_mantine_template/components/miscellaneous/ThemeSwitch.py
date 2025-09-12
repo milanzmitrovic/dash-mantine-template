@@ -12,8 +12,8 @@ from ...component_ids.containers.DummyOutputs import (
 from ...component_ids.miscellaneous.ThemeSwitch import (
     ThemeSwitchComponent,
 )
-from ...utils.Database.SqlAlchemy import sql_connector
-from ...utils.Logging.Logger import logger
+from ...utils.database.SqlAlchemy import sql_connector
+from ...utils.logging.Logger import logger
 
 
 def theme_switch():

@@ -9,11 +9,11 @@ import dash_mantine_components as dmc
 from dash import Input, Output, clientside_callback, dcc, html
 from pydantic import ConfigDict, validate_call
 
-from ....component_ids.utils.Layout.Layout import (
+from ....component_ids.utils.layout.Layout import (
     location_url__id,
     location_url_property,
 )
-from ....component_ids.utils.Layout.utils.DashPagesUtil import (
+from ....component_ids.utils.layout.utils.DashPagesUtil import (
     tabs__id,
     tabs__property,
 )
