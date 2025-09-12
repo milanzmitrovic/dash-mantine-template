@@ -21,6 +21,7 @@ dependencies = [
     "quantlib>=1.38",
     "sqlalchemy>=2.0.40",
     "yfinance>=0.2.61",
+    "dotenv"
 ]
 
 [project.scripts]

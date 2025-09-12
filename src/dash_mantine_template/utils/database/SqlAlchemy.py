@@ -3,11 +3,16 @@ Purpose of this file is to organize
 logic for interactions with database.
 """
 
+import os
 from typing import Dict, Optional
 
+from dotenv import load_dotenv
 from pydantic import ConfigDict, validate_call
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine.cursor import CursorResult
+
+# loads variables from .env file
+load_dotenv()
 
 
 class SqlConnector:
@@ -28,7 +33,16 @@ class SqlConnector:
     @validate_call(
         config=ConfigDict(arbitrary_types_allowed=True), validate_return=True
     )
-    def __init__(self, database_location: str):
+    def __init__(
+        self,
+        postgres_user: str,
+        postgres_password: str,
+        postgres_host: str,
+        postgres_port: int,
+        postgres_db: str,
+    ):
+        database_location = f"postgresql+psycopg2://{postgres_user}:{postgres_password}@{postgres_host}:{postgres_port}/{postgres_db}"
+
         self.engine = create_engine(database_location)
 
     @validate_call(
@@ -173,5 +187,9 @@ class SqlConnector:
 
 
 sql_connector = SqlConnector(
-    database_location="sqlite:///./temp/sqlite_database/example.db"
+    postgres_user=os.environ.get("POSTGRES_USER"),
+    postgres_password=os.environ.get("POSTGRES_PASSWORD"),
+    postgres_host=os.environ.get("POSTGRES_HOST"),
+    postgres_port=int(os.environ.get("POSTGRES_PORT")),
+    postgres_db=os.environ.get("POSTGRES_DB"),
 )
