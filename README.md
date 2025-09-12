@@ -150,9 +150,10 @@ with open(
 ```bash
 mkdir temp; 
 mkdir temp/logs;
-mkdir temp/sqlite_database;
 ```
+8a. Create pg database
 
+- Here is instruction how ro create pg database: https://gitlab.com/public-projects1853809/dash-mantine-template/-/boards?show=eyJpaWQiOiIyOSIsImZ1bGxfcGF0aCI6InB1YmxpYy1wcm9qZWN0czE4NTM4MDkvZGFzaC1tYW50aW5lLXRlbXBsYXRlIiwiaWQiOjE3MzQxODQ3Nn0%3D
 
 9. Run app.
 
