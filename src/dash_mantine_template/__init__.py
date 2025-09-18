@@ -6,6 +6,7 @@ It is actually main file of entire application.
 
 """
 
+from dash_mantine_template.config import *  # noqa: F403
 from dash_mantine_template.utils.CreateApp import create_app
 
 

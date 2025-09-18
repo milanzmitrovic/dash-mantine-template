@@ -3,11 +3,11 @@ x
 """
 
 import unittest
+
 from dash_mantine_template.components.utils.QueryBuilder import QueryBuilder
 
 
 class TestQueryBuilder(unittest.TestCase):
-
     def test_add_range_date_constraint_empty(self):
         qb = QueryBuilder(base_query="SELECT * FROM table")
         qb._add__range_date__constraint()
@@ -99,6 +99,3 @@ class TestQueryBuilder(unittest.TestCase):
         qb = QueryBuilder(base_query="SELECT 1", params={"a": 1})
         self.assertEqual(qb.get_final_parametrized_query(), "SELECT 1")
         self.assertEqual(qb.get_final_parameters(), {"a": 1})
-
-
-

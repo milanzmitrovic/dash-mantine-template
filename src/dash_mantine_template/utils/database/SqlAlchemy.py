@@ -6,13 +6,9 @@ logic for interactions with database.
 import os
 from typing import Dict, Optional
 
-from dotenv import load_dotenv
 from pydantic import ConfigDict, validate_call
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine.cursor import CursorResult
-
-# loads variables from .env file
-load_dotenv()
 
 
 class SqlConnector:
