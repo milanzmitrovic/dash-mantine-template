@@ -9,7 +9,7 @@ for proper function of Dash template app.
 import dash_mantine_components as dmc
 from dash import dcc, html
 
-from dash_mantine_template.utils.Layout.utils.DashPagesUtil import (
+from dash_mantine_template.utils.layout.utils.DashPagesUtil import (
     page_content,
     page_navigation_component,
     page_navigation_tab,

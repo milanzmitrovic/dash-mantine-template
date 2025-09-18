@@ -8,7 +8,7 @@ Mantine AppShellAside functionalities.
 
 import dash_mantine_components as dmc
 
-from dash_mantine_template.utils.Layout.utils.app_shell.Aside import aside_component
+from dash_mantine_template.utils.layout.utils.app_shell.Aside import aside_component
 
 
 def test__aside_component():

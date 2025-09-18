@@ -6,7 +6,7 @@ layout component.
 
 import dash_mantine_components as dmc
 
-from dash_mantine_template.utils.Layout.Layout import layout
+from dash_mantine_template.utils.layout.Layout import layout
 
 
 def test__layout():

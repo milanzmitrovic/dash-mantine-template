@@ -8,7 +8,7 @@ Mantine AppShellNavbar functionalities.
 
 import dash_mantine_components as dmc
 
-from dash_mantine_template.utils.Layout.utils.app_shell.Navbar import navbar_component
+from dash_mantine_template.utils.layout.utils.app_shell.Navbar import navbar_component
 
 
 def test__navbar_component():

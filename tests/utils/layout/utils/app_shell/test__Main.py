@@ -8,7 +8,7 @@ Mantine AppShellMain functionalities.
 
 import dash_mantine_components as dmc
 
-from dash_mantine_template.utils.Layout.utils.app_shell.Main import main_component
+from dash_mantine_template.utils.layout.utils.app_shell.Main import main_component
 
 
 def test__main_component():

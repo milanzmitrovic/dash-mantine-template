@@ -8,7 +8,7 @@ Mantine AppShellHeader functionalities.
 
 import dash_mantine_components as dmc
 
-from dash_mantine_template.utils.Layout.utils.app_shell.Header import header_component
+from dash_mantine_template.utils.layout.utils.app_shell.Header import header_component
 
 
 def test__header_component():
