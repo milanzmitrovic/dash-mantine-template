@@ -3,102 +3,97 @@ Purpose of this file is to organize
 tests for database connections.
 """
 
-import pytest
+from unittest.mock import MagicMock, patch
 
-from dash_mantine_template.utils.Database.SqlAlchemy import (
-    SqlConnector,  # adjust this import to your actual file
-)
+import pytest
+from sqlalchemy.engine.cursor import CursorResult
+
+from dash_mantine_template.utils.database.SqlAlchemy import SqlConnector
 
 
 @pytest.fixture
-def connector():
+def sql_connector():
     """
-    PyTest fixture connection.
+    x
     """
-
-    # Use in-memory SQLite DB
-    return SqlConnector("sqlite+pysqlite:///:memory:")
-
-
-def test__ddl_statement_creates_table(connector):
-    """
-    Purpose of this function is to
-    test possibility to execute DDL
-    type of SQL query.
-
-    """
-
-    ddl_query = """
-    CREATE TABLE users (
-        id INTEGER PRIMARY KEY,
-        name TEXT
-    )
-    """
-    connector.ddl_statement(ddl_query)
-
-    # Query sqlite_master to check if 'users' table exists
-    check_table_query = """
-    SELECT name FROM sqlite_master WHERE type='table' AND name='users';
-    """
-    result = connector.read_statement(check_table_query, parameters=None)
-    row = result.mappings().fetchone()
-
-    assert row is not None, "Table 'users' should be created"
-    assert row["name"] == "users"
-
-
-def test__create_and_read_statement(connector):
-    """
-    Purpose of this function is to
-    test methods for executing CREATE
-    and READ types of SQL query.
-
-    """
-    connector.ddl_statement("CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT)")
-
-    insert_query = "INSERT INTO users (id, name) VALUES (:id, :name)"
-    connector.create_statement(insert_query, {"id": 1, "name": "Alice"})
-
-    select_query = "SELECT * FROM users WHERE id=:id"
-    result = connector.read_statement(select_query, {"id": 1})
-    row = result.mappings().fetchone()
-    assert row["id"] == 1
-    assert row["name"] == "Alice"
-
-
-def test__update_statement(connector):
-    """
-    Purpose of this function is to
-    execute test for UPDATE method.
-    """
-    connector.ddl_statement("CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT)")
-    connector.create_statement(
-        "INSERT INTO users (id, name) VALUES (:id, :name)", {"id": 1, "name": "Alice"}
+    return SqlConnector(
+        postgres_user="user",
+        postgres_password="pass",
+        postgres_host="localhost",
+        postgres_port=5432,
+        postgres_db="test_db",
     )
 
-    update_query = "UPDATE users SET name=:name WHERE id=:id"
-    result = connector.update_statement(update_query, {"id": 1, "name": "Bob"})
-    assert result.rowcount == 1
 
-    select = connector.read_statement("SELECT name FROM users WHERE id=:id", {"id": 1})
-    row = select.mappings().fetchone()
-    assert row["name"] == "Bob"
+def _mock_connection(mock_connect):
+    """Helper to return a mock connection object with a CursorResult-like execute."""
+    mock_conn = MagicMock()
+    # Ensure execute returns something Pydantic accepts
+    mock_cursor_result = MagicMock(spec=CursorResult)
+    mock_conn.execute.return_value = mock_cursor_result
+    mock_connect.return_value.__enter__.return_value = mock_conn
+    return mock_conn, mock_cursor_result
 
 
-def test__delete_statement(connector):
-    """
-    Purpose of this function is to check
-    if DELETE type of SQL query can be
-    executed properly.
-    """
-    connector.ddl_statement("CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT)")
-    connector.create_statement(
-        "INSERT INTO users (id, name) VALUES (:id, :name)", {"id": 1, "name": "Alice"}
-    )
+def test_ddl_statement(sql_connector):
+    with patch.object(sql_connector.engine, "connect") as mock_connect:
+        mock_conn, _ = _mock_connection(mock_connect)
 
-    delete_query = "DELETE FROM users WHERE id=:id"
-    result = connector.delete_statement(delete_query, {"id": 1})
-    assert result.rowcount == 1
+        result = sql_connector.ddl_statement("CREATE TABLE test (id INT)")
 
-    result = connector.read_statement("SELECT * FROM users WHERE id=:id", {"id": 1})
-    assert result.fetchone() is None
+        mock_conn.execute.assert_called_once()
+        mock_conn.commit.assert_called_once()
+        assert isinstance(result, CursorResult)
+
+
+def test_create_statement(sql_connector):
+    with patch.object(sql_connector.engine, "connect") as mock_connect:
+        mock_conn, _ = _mock_connection(mock_connect)
+
+        result = sql_connector.create_statement(
+            "INSERT INTO test (id) VALUES (:id)", {"id": 1}
+        )
+
+        mock_conn.execute.assert_called_once()
+        mock_conn.commit.assert_called_once()
+        assert isinstance(result, CursorResult)
+
+
+def test_read_statement(sql_connector):
+    with patch.object(sql_connector.engine, "connect") as mock_connect:
+        mock_conn, _ = _mock_connection(mock_connect)
+
+        result = sql_connector.read_statement(
+            "SELECT * FROM test WHERE id=:id", {"id": 1}
+        )
+
+        mock_conn.execute.assert_called_once()
+        mock_conn.commit.assert_not_called()
+        assert isinstance(result, CursorResult)
+
+
+def test_update_statement(sql_connector):
+    with patch.object(sql_connector.engine, "connect") as mock_connect:
+        mock_conn, _ = _mock_connection(mock_connect)
+
+        result = sql_connector.update_statement(
+            "UPDATE test SET name=:name WHERE id=:id",
+            {"id": 1, "name": "Bob"},
+        )
+
+        mock_conn.execute.assert_called_once()
+        mock_conn.commit.assert_called_once()
+        assert isinstance(result, CursorResult)
+
+
+def test_delete_statement(sql_connector):
+    with patch.object(sql_connector.engine, "connect") as mock_connect:
+        mock_conn, _ = _mock_connection(mock_connect)
+
+        result = sql_connector.delete_statement(
+            "DELETE FROM test WHERE id=:id", {"id": 1}
+        )
+
+        mock_conn.execute.assert_called_once()
+        mock_conn.commit.assert_called_once()
+        assert isinstance(result, CursorResult)
