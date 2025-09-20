@@ -80,7 +80,7 @@ def test__logger__error():
         logger = Logger(logger_name="test_logger__error", logger_location=log_path)
 
         # Write a log line
-        logger.error("test log message")
+        logger.error("test log message", exc_info=True)
 
         # Sleep shortly to ensure file write completes (esp. for rotating handlers)
         time.sleep(0.1)

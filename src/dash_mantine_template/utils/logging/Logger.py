@@ -14,6 +14,8 @@ logs.
 """
 
 import logging
+import sys
+import threading
 from logging.handlers import TimedRotatingFileHandler
 
 
@@ -69,6 +71,30 @@ class Logger:
 
             self.logger.addHandler(handler)
 
+            # Capture uncaught exceptions
+            sys.excepthook = self.handle_exception
+
+            # Capture thread exceptions (Python 3.8+)
+            if hasattr(threading, "excepthook"):
+                threading.excepthook = self.handle_thread_exception
+
+    def handle_exception(self, exc_type, exc_value, exc_traceback):
+        """Global handler for uncaught exceptions in the main thread."""
+        if issubclass(exc_type, KeyboardInterrupt):
+            sys.__excepthook__(exc_type, exc_value, exc_traceback)
+            return
+        self.logger.error(
+            "Uncaught exception",
+            exc_info=(exc_type, exc_value, exc_traceback),
+        )
+
+    def handle_thread_exception(self, args):
+        """Global handler for uncaught exceptions in threads."""
+        self.logger.error(
+            "Uncaught thread exception",
+            exc_info=(args.exc_type, args.exc_value, args.exc_traceback),
+        )
+
     def info(self, message: str):
         """
 
@@ -85,13 +111,14 @@ class Logger:
         """
         self.logger.warning(msg=message)
 
-    def error(self, message: str):
+    def error(self, message: str, exc_info: bool):
         """
 
         :param message:
+        :param exc_info:
         :return:
         """
-        self.logger.error(msg=message)
+        self.logger.error(msg=message, exc_info=exc_info)
 
     def critical(self, message: str):
         """
