@@ -95,7 +95,6 @@ def on_theme_change(input_: Theme):
     logger.critical(111)
     logger.info(222)
     logger.warning(3333)
-    logger.error(4444)
     logger.debug(7777)
 
     ddl_statement = """

@@ -32,7 +32,7 @@ def main():
     # on initial page refresh.
     app.index_string = html_string
 
-    app.run()
+    app.run(port=8050, host="0.0.0.0")
 
 
 if __name__ == "__main__":

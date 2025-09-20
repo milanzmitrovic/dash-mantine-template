@@ -1,0 +1,34 @@
+services:
+  dash_app:
+    build: .
+    container_name: dash_app
+    volumes:
+      - ./shared_folder:/app/shared_folder
+    command: uv run dash-mantine-template
+    ports:
+      - "8051:8050"
+    depends_on:
+      - db
+
+  tests:
+    build: .
+    container_name: dash_tests
+    volumes:
+      - ./shared_folder:/app/shared_folder
+    command: uv run pytest
+
+  db:
+    image: postgres:15          # Use the version you want
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
