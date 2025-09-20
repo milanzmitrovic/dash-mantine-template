@@ -11,7 +11,8 @@ wheels/
 
 .idea
 
-/temp
+/temp/logs/*
+!/temp/logs/.gitkeep
 
 .DS_Store
 

@@ -20,14 +20,7 @@ git clone git@gitlab.com:public-projects1853809/dash-mantine-template.git
 cd dash-mantine-template
 ```
 
-3. Create necessary sub-directories
-
-```bash
-mkdir temp; 
-mkdir temp/logs;
-```
-
-3a. Create Postgress database
+3. Create Postgress database
 
 - Here is instruction how ro create pg database: https://gitlab.com/public-projects1853809/dash-mantine-template/-/boards?show=eyJpaWQiOiIyOSIsImZ1bGxfcGF0aCI6InB1YmxpYy1wcm9qZWN0czE4NTM4MDkvZGFzaC1tYW50aW5lLXRlbXBsYXRlIiwiaWQiOjE3MzQxODQ3Nn0%3D
 
@@ -144,14 +137,9 @@ with open(
         html_string = file.read()
 
 ```
-
-8. Create necessary folders inside temp/ directory:
-
-```bash
-mkdir temp; 
-mkdir temp/logs;
 ```
-8a. Create pg database
+
+8. Create pg database
 
 - Here is instruction how ro create pg database: https://gitlab.com/public-projects1853809/dash-mantine-template/-/boards?show=eyJpaWQiOiIyOSIsImZ1bGxfcGF0aCI6InB1YmxpYy1wcm9qZWN0czE4NTM4MDkvZGFzaC1tYW50aW5lLXRlbXBsYXRlIiwiaWQiOjE3MzQxODQ3Nn0%3D
 
