@@ -137,11 +137,27 @@ with open(
         html_string = file.read()
 
 ```
-```
 
 8. Create pg database
 
-- Here is instruction how ro create pg database: https://gitlab.com/public-projects1853809/dash-mantine-template/-/boards?show=eyJpaWQiOiIyOSIsImZ1bGxfcGF0aCI6InB1YmxpYy1wcm9qZWN0czE4NTM4MDkvZGFzaC1tYW50aW5lLXRlbXBsYXRlIiwiaWQiOjE3MzQxODQ3Nn0%3D
+Here is docker-compose.yml that can run Postgres database:
+
+```txt
+
+services:
+  db:
+    image: postgres:15   
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+```
 
 9. Run app.
 

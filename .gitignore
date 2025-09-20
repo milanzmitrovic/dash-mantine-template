@@ -17,3 +17,6 @@ wheels/
 .DS_Store
 
 .env
+
+# Comes from docker volume
+shared_folder
