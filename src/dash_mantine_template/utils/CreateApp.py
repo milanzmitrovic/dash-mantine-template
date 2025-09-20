@@ -9,6 +9,7 @@ from flask import Flask
 from pydantic import ConfigDict, validate_call
 
 from .layout.Layout import layout
+from .logging.Logger import logger
 
 
 @validate_call(config=ConfigDict(arbitrary_types_allowed=True), validate_return=True)
@@ -30,6 +31,15 @@ def create_app() -> dash.Dash:
              be run as main function.
     """
     flask_server = Flask(__name__)
+
+    # Log all Flask exceptions
+    @flask_server.errorhandler(Exception)
+    def handle_exception(e):
+        """
+        x
+        """
+        logger.error("Flask exception occurred", exc_info=True)
+        raise e  # re-raise so Flask still returns a 500
 
     dash_app = Dash(
         __name__,
