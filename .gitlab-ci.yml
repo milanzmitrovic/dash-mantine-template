@@ -1,26 +1,172 @@
 # Define the stages of the pipeline
 stages:
-  - build
+  # Linter, formatter, isort...
+  - code_quality
   - test
+  # Stop already running docker-compose process.
+  - stop
+  # Currently, build+deploy is done as
+  # one stage i.e. build is done directly
+  # on deployment server machine.
+  # In the future, build should be organized
+  # as separate step, where image should
+  # be built and published on docker
+  # repository. After that, in deploy
+  # step image should be pulled from
+  # repository.
+  - build
+  # Copy project onto server on specified folder.
+  # Build docker-compose process.
+  - deploy
+  # Start docker-compose process.
+  - start
+  # Remove everything from folder that was used
+  # by GitLab to execute jobs.
+  # This is about security i.e. make sure that
+  # on runner server there is no secrets left.
+  # Deploy and start jobs are running on bare metal.
+  - clean
 
-# Build stage
-build_job:
-  stage: build
-  script:
-    - echo "Building the project..."
+code_quality-job:
+  stage: code_quality
+
+  tags:
+    - docker   # runs inside Docker
+
   # Only run this job for merge requests and main branch
   rules:
     - if: '$CI_MERGE_REQUEST_ID' # This will trigger the job for merge requests
 
+  script:
+    - echo "Running tests..."
+
+# --- # --- # --- # --- # --- # --- # --- # --- # --- # --- #
+# --- # --- # --- # --- # --- # --- # --- # --- # --- # --- #
+# --- # --- # --- # --- # --- # --- # --- # --- # --- # --- #
 
 # Test stage
-test_job:
+test-job:
   stage: test
+
+  dependencies:
+    - code_quality-job
+
+  tags:
+    - docker   # runs inside Docker
+
   script:
     - echo "Running tests..."
   # Make this job dependent on the build stage
   needs:
-    - build_job
+    - code_quality-job
   # Only run this job for merge requests and main branch
   rules:
     - if: '$CI_MERGE_REQUEST_ID' # This will trigger the job for merge requests
+
+# --- # --- # --- # --- # --- # --- # --- # --- # --- # --- #
+# --- # --- # --- # --- # --- # --- # --- # --- # --- # --- #
+# --- # --- # --- # --- # --- # --- # --- # --- # --- # --- #
+
+stop-job:
+  stage: stop
+
+  dependencies:
+    - test-job
+
+  tags:
+    - baremetal   # runs on host machine, can see Tailscale
+
+  before_script:
+#    # Install SSH client
+#    - apk add --no-cache openssh-client
+
+    # Setup SSH directory
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+
+    # Add the private key from variable
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/deploy_server_ssh
+    - chmod 600 ~/.ssh/deploy_server_ssh
+
+  script:
+    - echo "SSH_SERVER=$SSH_SERVER"
+    - ping -c 1 "$SSH_SERVER" || echo "Cannot ping $SSH_SERVER"
+    - echo SSH_SERVER
+    - echo 123
+
+    - ssh -i ~/.ssh/deploy_server_ssh -o StrictHostKeyChecking=no root@"$SSH_SERVER" "echo 'Connected to $SSH_SERVER'"
+
+# --- # --- # --- # --- # --- # --- # --- # --- # --- # --- #
+# --- # --- # --- # --- # --- # --- # --- # --- # --- # --- #
+# --- # --- # --- # --- # --- # --- # --- # --- # --- # --- #
+
+deploy-job:
+  stage: deploy
+
+  dependencies:
+    - stop-job
+
+  tags:
+    - baremetal   # runs on host machine, can see Tailscale
+
+  before_script:
+#    # Install SSH client
+#    - apk add --no-cache openssh-client
+
+    # Setup SSH directory
+    - mkdir -p .ssh
+    - chmod 700 .ssh
+
+    # Add the private key from variable
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > .ssh/deploy_server_ssh
+    - chmod 600 .ssh/deploy_server_ssh
+
+  script:
+#    - echo "SSH_SERVER=$SSH_SERVER"
+#    - echo "deploy_folder__dev=$deploy_folder__dev"
+    - ping -c 1 "$SSH_SERVER" || echo "Cannot ping $SSH_SERVER"
+    - echo SSH_SERVER
+    - echo 123
+
+    - ssh -i .ssh/deploy_server_ssh -o StrictHostKeyChecking=no root@"$SSH_SERVER" "echo 'Connected to $SSH_SERVER'"
+
+    - ssh -i .ssh/deploy_server_ssh -o StrictHostKeyChecking=no root@"$SSH_SERVER" "cd $deploy_folder__dev && touch xxx"
+
+    # Copy everything on deployment server on deployment folder.
+    - |
+      rsync -avz -e "ssh -i ~/.ssh/deploy_server_ssh -o StrictHostKeyChecking=no" \
+        --exclude ".ssh" \
+        --exclude ".git" \
+        ./ root@"$SSH_SERVER":$deploy_folder__dev
+
+# --- # --- # --- # --- # --- # --- # --- # --- # --- # --- #
+# --- # --- # --- # --- # --- # --- # --- # --- # --- # --- #
+# --- # --- # --- # --- # --- # --- # --- # --- # --- # --- #
+
+start-job:
+  stage: start
+
+  dependencies:
+    - deploy-job
+
+  tags:
+    - baremetal   # runs on host machine, can see Tailscale
+
+  script:
+    - rm -rf ./*
+
+# --- # --- # --- # --- # --- # --- # --- # --- # --- # --- #
+# --- # --- # --- # --- # --- # --- # --- # --- # --- # --- #
+# --- # --- # --- # --- # --- # --- # --- # --- # --- # --- #
+
+clean-job:
+  stage: clean
+
+  dependencies:
+    - start-job
+
+  tags:
+    - baremetal   # runs on host machine, can see Tailscale
+
+  script:
+    - rm -rf ./*

@@ -312,6 +312,18 @@ wheels = [
 ]
 
 [[package]]
+name = "dash-ag-grid"
+version = "32.3.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "dash" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ca/c5/e21582ac73ed1f70014c119b83703964f3626638b5cd9693f7ae65de4521/dash_ag_grid-32.3.2.tar.gz", hash = "sha256:c3137b66c73b2de82da379c2aa238f4fbe9b555913c3361e11d93096a0e61f50", size = 4023382 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/0d/10/646ccf7bbea83399965079f500ec719d821d19785372694fa9fe4db12182/dash_ag_grid-32.3.2-py3-none-any.whl", hash = "sha256:a690d18a83ebba96e68e63d928f3e30f97d38a8a6418ddd479db4ce825c0de91", size = 4043665 },
+]
+
+[[package]]
 name = "dash-iconify"
 version = "0.1.2"
 source = { registry = "https://pypi.org/simple" }
@@ -355,6 +367,7 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "dash-ag-grid" },
     { name = "pre-commit" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -382,6 +395,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "dash-ag-grid", specifier = ">=32.3.2" },
     { name = "pre-commit", specifier = ">=4.3.0" },
     { name = "pytest", specifier = ">=8.3.4" },
     { name = "pytest-cov", specifier = ">=6.0.0" },

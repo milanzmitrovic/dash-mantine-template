@@ -33,6 +33,7 @@ build-backend = "hatchling.build"
 
 [dependency-groups]
 dev = [
+    "dash-ag-grid>=32.3.2",
     "pre-commit>=4.3.0",
     "pytest>=8.3.4",
     "pytest-cov>=6.0.0",
