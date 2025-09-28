@@ -1,13 +1,34 @@
 # Define the stages of the pipeline
 stages:
-  - build
+  - code_quality
   - test
+  - stop
+  - deploy
+  - build
+  - start
 
-# Build stage
+code_quality_job:
+  stage: code_quality
+
+  tags:
+    - docker   # runs inside Docker
+
+  # Only run this job for merge requests and main branch
+  rules:
+    - if: '$CI_MERGE_REQUEST_ID' # This will trigger the job for merge requests
+
+  script:
+    - echo "Running tests..."
+
 build_job:
   stage: build
+
+  tags:
+    - docker   # runs inside Docker
+
   script:
-    - echo "Building the project..."
+    - echo "Running tests..."
+
   # Only run this job for merge requests and main branch
   rules:
     - if: '$CI_MERGE_REQUEST_ID' # This will trigger the job for merge requests
@@ -16,11 +37,41 @@ build_job:
 # Test stage
 test_job:
   stage: test
+
+  tags:
+    - docker   # runs inside Docker
+
   script:
     - echo "Running tests..."
   # Make this job dependent on the build stage
   needs:
-    - build_job
+    - code_quality_job
   # Only run this job for merge requests and main branch
   rules:
     - if: '$CI_MERGE_REQUEST_ID' # This will trigger the job for merge requests
+
+deploy-job:
+  stage: deploy
+
+  tags:
+    - baremetal   # runs on host machine, can see Tailscale
+
+  before_script:
+#    # Install SSH client
+#    - apk add --no-cache openssh-client
+
+    # Setup SSH directory
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+
+    # Add the private key from variable
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/deploy_server_ssh
+    - chmod 600 ~/.ssh/deploy_server_ssh
+
+  script:
+    - echo "SSH_SERVER=$SSH_SERVER"
+    - ping -c 1 "$SSH_SERVER" || echo "Cannot ping $SSH_SERVER"
+    - echo SSH_SERVER
+    - echo 123
+
+    - ssh -i ~/.ssh/deploy_server_ssh -o StrictHostKeyChecking=no root@"$SSH_SERVER" "echo 'Connected to $SSH_SERVER'"
