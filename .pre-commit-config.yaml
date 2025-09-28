@@ -2,7 +2,7 @@
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v6.0.0
     hooks:
       # Fails if there are any ">>>>>" lines in files due to merge conflicts.
       - id: check-merge-conflict
@@ -47,7 +47,7 @@ repos:
       - id: detect-private-key
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.2.0"
+    rev: "v1.18.2"
     hooks:
       - id: mypy
         args:
@@ -57,44 +57,43 @@ repos:
             --config-file=./pyproject.toml,
           ]
 
-  - repo: https://github.com/psf/black
-    rev: 23.1.0
-    hooks:
-      - id: black
-        args:
-          - --config=./pyproject.toml
+#  - repo: https://github.com/psf/black
+#    rev: 25.9.0
+#    hooks:
+#      - id: black
+#        args:
+#          - --config=./pyproject.toml
 
-  - repo: https://github.com/PyCQA/pylint
-    rev: v2.16.3
-    hooks:
-      - id: pylint
-        args:
-          - --rcfile=./pyproject.toml
+#  - repo: https://github.com/PyCQA/pylint
+#    rev: v3.3.8
+#    hooks:
+#      - id: pylint
+#        args:
+#          - --rcfile=./pyproject.toml
 
-  - repo: https://github.com/PyCQA/flake8
-    rev: 6.0.0
-    hooks:
-      - id: flake8
-        args:
-          - --toml-config=./pyproject.toml
-        additional_dependencies:
-          - radon
-          - flake8-docstrings
-          - Flake8-pyproject
+#  - repo: https://github.com/PyCQA/flake8
+#    rev: 7.3.0
+#    hooks:
+#      - id: flake8
+#        args:
+#          - --toml-config=./pyproject.toml
+#        additional_dependencies:
+#          - radon
+#          - flake8-docstrings
+#          - Flake8-pyproject
 
-  - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.13.2 # check latest version: https://github.com/astral-sh/ruff-pre-commit
     hooks:
-      - id: isort
-        args:
-          - --settings-path=./pyproject.toml
+      # Linting (replaces flake8, pylint, autoflake checks)
+      - id: ruff
+        args: [--config=./pyproject.toml]
 
-  - repo: https://github.com/PyCQA/autoflake
-    rev: v2.0.1
-    hooks:
-      - id: autoflake
-        args:
-          - --in-place
-          - --remove-all-unused-imports
-          - --remove-unused-variable
-          - --ignore-init-module-imports
+      # Formatting (replaces black)
+      - id: ruff-format
+        args: [--config=./pyproject.toml]
+
+      # Import sorting (replaces isort)
+      - id: ruff
+        name: ruff-sort-imports
+        args: [--select=I, --fix, --config=./pyproject.toml]
