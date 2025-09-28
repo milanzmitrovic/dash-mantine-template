@@ -39,16 +39,16 @@ clientside_callback(
     (switchOn) => {
 
         // Main logic is implemented here.
-        // Setting value dark/light to 
-        // attribute data-mantine-color-scheme 
+        // Setting value dark/light to
+        // attribute data-mantine-color-scheme
         // of HTML scheme.
         document.documentElement.setAttribute('data-mantine-color-scheme', switchOn ? 'light' : 'dark');
 
 
-        // Purpose of this part is to remove CSS files that 
+        // Purpose of this part is to remove CSS files that
         // has been preloaded when page is being refreshed.
-        // Those CSS files are only necessary when refreshing 
-        // page in order to to remove WHITE/BLACK background in 
+        // Those CSS files are only necessary when refreshing
+        // page in order to to remove WHITE/BLACK background in
         // browser untill Mantine style/theme is loaded.
         const cssFilesToRemove = ['dark.css', 'light.css'];
         const links = document.querySelectorAll('link[rel="stylesheet"]');
@@ -60,7 +60,7 @@ clientside_callback(
             }
         });
 
-        // This is just due to sth must be returned 
+        // This is just due to sth must be returned
         // by Dash callback as per design.
        return window.dash_clientside.no_update
     }
@@ -105,7 +105,7 @@ def on_theme_change(input_: Theme):
             age INTEGER
         );
 
-                
+
     """
     result_ = sql_connector.ddl_statement(ddl_query=ddl_statement)
     print(result_)

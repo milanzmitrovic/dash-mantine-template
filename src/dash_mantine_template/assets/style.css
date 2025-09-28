@@ -1,6 +1,6 @@
 /* Purpose of --universal-color Mantine
-CSS variable is to have unique color of 
-element regardless of background theme 
+CSS variable is to have unique color of
+element regardless of background theme
 that is chosen by user.
 */
 html[data-mantine-color-scheme='light'] {
