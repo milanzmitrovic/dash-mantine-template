@@ -21,7 +21,7 @@ dependencies = [
     "quantlib>=1.38",
     "sqlalchemy>=2.0.40",
     "yfinance>=0.2.61",
-    "dotenv"
+    "dotenv",
 ]
 
 [project.scripts]
@@ -33,6 +33,7 @@ build-backend = "hatchling.build"
 
 [dependency-groups]
 dev = [
+    "pre-commit>=4.3.0",
     "pytest>=8.3.4",
     "pytest-cov>=6.0.0",
     "pytest-mock>=3.14.0",

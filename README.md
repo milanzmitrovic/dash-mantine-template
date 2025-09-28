@@ -28,7 +28,7 @@ Here is docker-compose.yml that can run Postgres database:
 
 services:
   db:
-    image: postgres:15   
+    image: postgres:15  
     container_name: postgres_db
     restart: always
     environment:
@@ -163,7 +163,7 @@ Here is docker-compose.yml that can run Postgres database:
 
 services:
   db:
-    image: postgres:15   
+    image: postgres:15  
     container_name: postgres_db
     restart: always
     environment:
@@ -201,6 +201,28 @@ find tests/ -type f -name "*.py" -exec sed -i '' 's/from my_new_app\./from dash_
 ```text
 uv sync --dev
 ```
+
+## How to activate pre-commit hook functionality?
+
+1. Autoupdate version of hooks
+```text
+uv run pre-commit autoupdate
+```
+
+2. Reinstall hooks after updating
+
+```text
+uv run pre-commit install --install-hooks
+```
+
+3. Run hooks
+
+```text
+uv run pre-commit run
+
+uv run pre-commit run --all-files
+```
+
 
 ## How to start project?
 
@@ -256,7 +278,7 @@ uv run ruff check
 uv run ruff check --fix
 ```
 
-## How to run ruff formatter? 
+## How to run ruff formatter?
 
 ```text
 uv run ruff format
@@ -294,7 +316,7 @@ uv run ruff check --select I --fix
 - What to do with development of features that being developed after rc (release candidate) branch was created?
     - Shall we merge changes into develop or wait?
 
-    
+
 ## Branches:
 - main
 - develop
@@ -320,6 +342,4 @@ uv run ruff check --select I --fix
 ## Git strategy:
 1. Create issue
 2. Create PR/MR
-3. 
-
-
+3.
