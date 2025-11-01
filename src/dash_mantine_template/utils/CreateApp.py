@@ -3,11 +3,14 @@ Purpose of this file is to help with
 organization of 'create app' pattern.
 """
 
+import os
+
 import dash
 from dash import Dash
 from flask import Flask
 from pydantic import ConfigDict, validate_call
 
+from ..context import app_context
 from .layout.Layout import layout
 from .logging.Logger import logger
 
@@ -47,9 +50,9 @@ def create_app() -> dash.Dash:
         title="Dash Mantine Template",
         # Necessary because pages folder is in root,
         # while app is instantiated in child folder.
-        pages_folder="../",
+        pages_folder=os.getcwd() + app_context.env_vars.pages_folder,
         server=flask_server,
-        assets_folder="../",
+        assets_folder=os.getcwd() + app_context.env_vars.assets_folder,
     )
 
     dash_app.layout = layout()

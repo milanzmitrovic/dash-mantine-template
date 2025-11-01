@@ -18,6 +18,8 @@ import sys
 import threading
 from logging.handlers import TimedRotatingFileHandler
 
+from dash_mantine_template.context import app_context
+
 
 class Logger:
     """
@@ -137,4 +139,6 @@ class Logger:
         self.logger.debug(msg=message)
 
 
-logger = Logger(logger_name="dmt", logger_location="temp/logs/app.log")
+logger = Logger(
+    logger_name="dmt", logger_location=app_context.env_vars.log_file_location
+)

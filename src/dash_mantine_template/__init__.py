@@ -7,6 +7,7 @@ It is actually main file of entire application.
 """
 
 from dash_mantine_template.config import *  # noqa: F403
+from dash_mantine_template.context import app_context
 from dash_mantine_template.utils.CreateApp import create_app
 
 
@@ -32,7 +33,11 @@ def main():
     # on initial page refresh.
     app.index_string = html_string
 
-    app.run(port=8050, host="0.0.0.0")
+    app.run(
+        port=app_context.env_vars.app_port,
+        host="0.0.0.0",
+        debug=app_context.env_vars.debug,
+    )
 
 
 if __name__ == "__main__":
