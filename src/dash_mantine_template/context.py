@@ -7,22 +7,23 @@ from .config import EnvContext
 @dataclass
 class AppContext:
     """
-    1
+    Class representing context of Dash app.
+
     """
 
     env_vars: EnvContext
-    db: str
-    logger: str
+    example_app_context_variable: str
 
     @classmethod
     def create(cls):
         """
-        2
+        Create context.
         """
-        db = ""
-        logger = ""
+        example_app_context_variable = ""
         env_vars = EnvContext()  # loads from env/.env
-        return cls(env_vars=env_vars, db=db, logger=logger)
+        return cls(
+            env_vars=env_vars, example_app_context_variable=example_app_context_variable
+        )
 
 
 app_context = AppContext.create()

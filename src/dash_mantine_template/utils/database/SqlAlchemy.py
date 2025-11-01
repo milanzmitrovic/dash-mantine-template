@@ -184,14 +184,9 @@ class SqlConnector:
 
 
 sql_connector = SqlConnector(
-    # postgres_user=os.environ.get("POSTGRES_USER"),
     postgres_user=app_context.env_vars.database.POSTGRES_USER,
-    # postgres_password=os.environ.get("POSTGRES_PASSWORD"),
     postgres_password=app_context.env_vars.database.POSTGRES_PASSWORD,
-    # postgres_host=os.environ.get("POSTGRES_HOST"),
     postgres_host=app_context.env_vars.database.POSTGRES_HOST,
-    # postgres_port=int(os.environ.get("POSTGRES_PORT")),
     postgres_port=int(app_context.env_vars.database.POSTGRES_PORT),
-    # postgres_db=os.environ.get("POSTGRES_DB"),
     postgres_db=app_context.env_vars.database.POSTGRES_DB,
 )
