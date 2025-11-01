@@ -73,6 +73,10 @@ clientside_callback(
 class Theme(Enum):
     DARK = False
     LIGHT = True
+    # When user initially visits,
+    # theme is not yet set. So,
+    # it will be None for the first visit.
+    initial = None
 
 
 # This we can use for dynamically
