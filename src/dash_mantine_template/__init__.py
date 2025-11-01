@@ -6,6 +6,15 @@ It is actually main file of entire application.
 
 """
 
+# Make sure that config import is always written
+# as first importing file. Why? We should be sure
+# that env variables are loaded as first step after
+# app is run.
+# We need cc alias here so that we can use custom components
+# using fancy importing i.e. so that we can import it from
+# project name.
+import utils.custom_components as cc  # noqa: F401
+
 from dash_mantine_template.config import *  # noqa: F403
 from dash_mantine_template.context import app_context
 from dash_mantine_template.utils.CreateApp import create_app

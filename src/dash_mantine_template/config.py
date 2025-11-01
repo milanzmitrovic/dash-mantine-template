@@ -5,6 +5,9 @@ project initialization.
 
 Otherwise, env vars could be used
 before they are loaded.
+
+This file should be loaded as first file
+at the start of Dash app.
 """
 
 import os
