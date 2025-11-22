@@ -67,6 +67,7 @@ clientside_callback(
     """,
     Output(ThemeClientsideCallback.id.value, ThemeClientsideCallback.property.value),
     Input(ThemeSwitchComponent.id.value, ThemeSwitchComponent.property.value),
+    hidden=True,
 )
 
 
@@ -85,6 +86,7 @@ class Theme(Enum):
 @callback(
     Output(OnThemeChange.id.value, OnThemeChange.property.value),
     Input(ThemeSwitchComponent.id.value, ThemeSwitchComponent.property.value),
+    hidden=True
 )
 @validate_call(config=ConfigDict(arbitrary_types_allowed=True), validate_return=True)
 def on_theme_change(input_: Theme):

@@ -13,7 +13,7 @@ It is actually main file of entire application.
 # We need cc alias here so that we can use custom components
 # using fancy importing i.e. so that we can import it from
 # project name.
-import utils.custom_components as cc  # noqa: F401
+import dash_mantine_template.utils.global_components as gc # noqa: F401
 
 from dash_mantine_template.config import *  # noqa: F403
 from dash_mantine_template.context import app_context
