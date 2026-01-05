@@ -36,7 +36,7 @@ claude:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
   variables:
     GIT_STRATEGY: fetch
-    GITLAB_ACCESS_TOKEN: $CI_JOB_TOKEN  # Add this line!
+    GITLAB_ACCESS_TOKEN: $GITLAB_ACCESS_TOKEN  # Add this line!
   before_script:
     - apk update
     - apk add --no-cache git curl bash
