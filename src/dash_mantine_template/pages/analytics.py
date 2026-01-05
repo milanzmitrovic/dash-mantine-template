@@ -8,10 +8,6 @@ from dash import (
     html,
 )
 
-from dash_mantine_template.components.filters.radio_button import (
-    radio_button__component,
-)
-
 dash.register_page(__name__, path="/analytics")
 
 
@@ -23,7 +19,6 @@ def layout():
     return html.Div(
         [
             html.H1("This is our: Analytics page"),
-            radio_button__component(),
             html.Br(),
         ]
     )

@@ -116,9 +116,9 @@ my-new-app = "my_new_app:main"
 ```python
 # Old
 
-from dash_mantine_template.components.filters.radio_button
+from dash_mantine_template.components.filters.XYZ
 import (
-    radio_button__component,
+    ZXY,
 )
 ```
 

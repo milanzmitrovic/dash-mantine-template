@@ -106,7 +106,7 @@ def page_navigation_component() -> dmc.Container:
         ],
         # When new pages are added,
         # size should be increased.
-        size=195,
+        size=310,
     )
 
 
