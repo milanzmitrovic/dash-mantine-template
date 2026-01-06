@@ -1,31 +1,35 @@
+# 🚀 Project Setup & Development Guide
 
-# 1. How to start project?
+## 📋 Table of Contents
+- [Getting Started](#getting-started)
+- [Project Management](#project-management)
+- [Code Quality](#code-quality)
+- [Development Workflow](#development-workflow)
 
-## How to clone project?
+---
+
+## Getting Started
+
+### 🔄 Clone Project (Quick Start)
 
 <details>
+<summary><strong>View Steps</strong></summary>
 
-<summary>Steps</summary>
-
-
-1. Clone project
-
+**1. Clone the repository**
 ```bash
 git clone git@gitlab.com:public-projects1853809/dash-mantine-template.git
 ```
 
-2. Change directory
-
+**2. Navigate to project directory**
 ```bash
 cd dash-mantine-template
 ```
 
-3. Create Postgres database
+**3. Create PostgreSQL database**
 
-Here is docker-compose.yml that can run Postgres database:
+Use this `docker-compose.yml` configuration:
 
-```txt
-
+```yaml
 services:
   db:
     image: postgres:15  
@@ -41,35 +45,31 @@ services:
       - postgres_data:/var/lib/postgresql/data
 ```
 
-4. Run app
-
+**4. Run the application**
 ```bash
 uv run my-new-app
 ```
 
 </details>
 
-## How to clone project under your project name?
+---
+
+### 🎯 Clone Project with Custom Name
 
 <details>
+<summary><strong>View Steps</strong></summary>
 
-<summary>Steps</summary>
-
-
-1. Create new package
-
+**1. Create new package**
 ```bash
 uv init --package my-new-app
 ```
 
-2. Clone dash-mantine-project
-
+**2. Clone dash-mantine-project**
 ```bash
 git clone git@gitlab.com:public-projects1853809/dash-mantine-template.git
 ```
 
-3. Delete everything from folder my-new-app
-
+**3. Clean the new project folder**
 ```bash
 cd my-new-app
 rm -rf *
@@ -77,13 +77,14 @@ rm .gitignore
 rm .python-version
 ```
 
-4. Copy everything from dash-mantine-project onto my-new-app folder
+**4. Copy template files**
 
-5. Rename names in pyproject.toml file.
+Copy everything from `dash-mantine-project` to `my-new-app` folder
 
-```txt
-# Old
+**5. Update `pyproject.toml`**
 
+*Before:*
+```toml
 name = "dash-mantine-template"
 authors = [
     { name = "Milan Mitrovic", email = "milanmitrovic1991@gmail.com" }
@@ -92,10 +93,8 @@ authors = [
 dash-mantine-template = "dash_mantine_template:main"
 ```
 
-
-```txt
-# New
-
+*After:*
+```toml
 name = "my-new-app"
 authors = [
     { name = "Name Surname", email = "user@email.com" }
@@ -104,242 +103,257 @@ authors = [
 my-new-app = "my_new_app:main"
 ```
 
+**6. Rename source folder**
 ```bash
-# rename source folder
-
-- mv src/dash_mantine_template/ src/my_new_app/
-
+mv src/dash_mantine_template/ src/my_new_app/
 ```
 
-6. Rename imports in pages/ folder:
+**7. Update imports in `pages/` folder**
 
+*Before:*
 ```python
-# Old
-
-from dash_mantine_template.components.filters.XYZ
-import (
+from dash_mantine_template.components.filters.XYZ import (
     ZXY,
 )
 ```
 
+*After:*
 ```python
-# New
-
 from my_new_app.components.filters.radio_button import (
     radio_button__component,
 )
 ```
 
-7. Rename filepath to html template:
+**8. Update HTML template filepath**
 
+*Before:*
 ```python
-# Old
-
 with open(
-        "src/dash_mantine_template/components/miscellaneous/InitialTheme.html",
-        "r",
-        encoding="utf-8",
-    ) as file:
-        html_string = file.read()
+    "src/dash_mantine_template/components/miscellaneous/InitialTheme.html",
+    "r",
+    encoding="utf-8",
+) as file:
+    html_string = file.read()
 ```
 
+*After:*
 ```python
-# New
-
 with open(
     "src/my_new_app/components/miscellaneous/InitialTheme.html",
-        "r",
-        encoding="utf-8",
-    ) as file:
-        html_string = file.read()
-
+    "r",
+    encoding="utf-8",
+) as file:
+    html_string = file.read()
 ```
 
-8. Create pg database
+**9. Create PostgreSQL database**
 
-Here is docker-compose.yml that can run Postgres database:
+Use the same `docker-compose.yml` from Quick Start section
 
-```txt
-
-services:
-  db:
-    image: postgres:15  
-    container_name: postgres_db
-    restart: always
-    environment:
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
-      POSTGRES_DB: mydatabase
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-```
-
-9. Run app.
-
+**10. Run the application**
 ```bash
 uv run my-new-app
 ```
 
-
-10. Rename imports in tests/ folder:
-
+**11. Update test imports**
 ```bash
-
 find tests/ -type f -name "*.py" -exec sed -i '' 's/from my_new_app\./from dash_mantine_template./g' {} +
-
-
 ```
-
 
 </details>
 
+---
 
-## How to sync project?
+## Project Management
 
-```text
+### 📦 Dependencies
+
+**Sync project dependencies**
+```bash
 uv sync --dev
 ```
 
-## How to activate pre-commit hook functionality?
-
-1. Autoupdate version of hooks
-```text
-uv run pre-commit autoupdate
-```
-
-2. Reinstall hooks after updating
-
-```text
-uv run pre-commit install --install-hooks
-```
-
-3. Run hooks
-
-```text
-uv run pre-commit run
-
-uv run pre-commit run --all-files
-```
-
-
-## How to start project?
-
-```text
-uv run dash-mantine-template
-```
-
-## How to run tests?
-
-```text
- uv run pytest .
-```
-
-## How to get coverage report?
-
-```text
-COVERAGE_FILE=temp/coverage_data/.coverage uv run python -m pytest --cov .
-```
-
-## How to save coverage report in .html file?
-
-```text
-COVERAGE_FILE=temp/coverage_data/.coverage pytest --cov=. --cov-report=html:temp/coverage_report/html --cov-report=xml:temp/coverage_report/xml/coverage.xml
-```
-
-## How to add project dependency?
-
-```text
+**Add project dependency**
+```bash
 uv add python_package_name
 ```
 
-## How to add development dependency?
-
-```text
+**Add development dependency**
+```bash
 uv add --dev package_name
 ```
 
-## How to install project with 'dev' dependencies?
-
-```text
+**Install with dev dependencies**
+```bash
 uv sync --dev
 ```
 
+---
 
-## How to run ruff linter?
+### 🔧 Pre-commit Hooks
 
-```text
+**1. Auto-update hook versions**
+```bash
+uv run pre-commit autoupdate
+```
+
+**2. Reinstall hooks**
+```bash
+uv run pre-commit install --install-hooks
+```
+
+**3. Run hooks**
+```bash
+# Run on staged files
+uv run pre-commit run
+
+# Run on all files
+uv run pre-commit run --all-files
+```
+
+---
+
+### ▶️ Running the Project
+
+**Start application**
+```bash
+uv run dash-mantine-template
+```
+
+---
+
+## Code Quality
+
+### 🧪 Testing
+
+**Run tests**
+```bash
+uv run pytest .
+```
+
+**Generate coverage report**
+```bash
+COVERAGE_FILE=temp/coverage_data/.coverage uv run python -m pytest --cov .
+```
+
+**Save coverage report as HTML**
+```bash
+COVERAGE_FILE=temp/coverage_data/.coverage pytest --cov=. --cov-report=html:temp/coverage_report/html --cov-report=xml:temp/coverage_report/xml/coverage.xml
+```
+
+---
+
+### ✨ Code Formatting & Linting
+
+**Run ruff linter**
+```bash
 uv run ruff check
 ```
 
-# Linter fix
-```text
+**Auto-fix linter issues**
+```bash
 uv run ruff check --fix
 ```
 
-## How to run ruff formatter?
-
-```text
+**Format code**
+```bash
 uv run ruff format
 ```
 
-## How to sort imports?
-
-```text
+**Sort imports**
+```bash
 uv run ruff check --select I --fix
 ```
 
-## What code quality steps should be done before each commit?
+---
 
-- Run PyTest
-- Sort imports
-- Format code
-- Lint code
+### ✅ Pre-commit Checklist
 
-## Pyway migrations
-- INFO: uv run pyway info
-- VALIDATE: uv run pyway validate
-- MIGRATE: uv run pyway migrate
-- IMPORT: ...
-- CHECKSUM: ...
+Before each commit, ensure you:
+- ✓ Run PyTest
+- ✓ Sort imports
+- ✓ Format code
+- ✓ Lint code
 
+---
 
-# 2. How to develop product using project template?
+### 🗄️ Database Migrations (Pyway)
 
-## Workflow
-- Create feature branch
-- Merge it into develop
-- Create release branch from develop
-- Deploy release branch to UAT
-- Where to iterate (implement user feedback)? On release or on develop branch?
-- What to do with development of features that being developed after rc (release candidate) branch was created?
-    - Shall we merge changes into develop or wait?
+```bash
+# View migration info
+uv run pyway info
 
+# Validate migrations
+uv run pyway validate
 
-## Branches:
-- main
-- develop
-- feature/branch_name
-- release/branch_name
+# Run migrations
+uv run pyway migrate
 
-## Tags:
-- test-version_number
-- uat-version_number
-- prod-version_number
+# Import (TBD)
+# Checksum (TBD)
+```
 
-## Deployment strategy:
-- There are 3 levels of permissions.
-- Deployment to TEST, UAT, PROD.
-- How is deployment triggered?
-  - Deployment is triggered after TAG with specific name pattern is created.
-  - Depending on TAG name, different CICD pipeline is triggered.
-  - Different users have different right to create different TAGs.
-    - Developer can create TAG that starts with TEST-version_number
-    - Higher authority I can create TAG with UAT-version_number
-    - Higher authority II can create tag with PROD-version_number
+---
 
-## Git strategy:
+## Development Workflow
+
+### 🌿 Branch Strategy
+
+**Branch Types:**
+- `main` - Production-ready code
+- `develop` - Integration branch for features
+- `feature/branch_name` - Feature development
+- `release/branch_name` - Release preparation
+
+---
+
+### 🏷️ Tagging Convention
+
+- `test-version_number` - Test environment
+- `uat-version_number` - UAT environment
+- `prod-version_number` - Production environment
+
+---
+
+### 🚢 Deployment Strategy
+
+**Three-tier deployment process:**
+
+| Environment | Tag Pattern | Permission Level |
+|-------------|-------------|------------------|
+| TEST | `test-version_number` | Developer |
+| UAT | `uat-version_number` | Higher Authority I |
+| PROD | `prod-version_number` | Higher Authority II |
+
+**How it works:**
+- Deployment is triggered when a TAG with specific name pattern is created
+- Different CICD pipelines run based on TAG name
+- User permissions determine which TAGs can be created
+
+---
+
+### 🔄 Workflow Process
+
+1. Create feature branch from `develop`
+2. Merge feature into `develop`
+3. Create release branch from `develop`
+4. Deploy release branch to UAT
+5. Iterate on feedback (on release or develop branch?)
+6. Handle concurrent feature development after release candidate creation
+
+**Open Questions:**
+- Where to iterate user feedback? Release or develop branch?
+- How to handle features being developed after RC branch creation?
+  - Merge changes into develop or wait?
+
+---
+
+### 📝 Git Workflow
+
 1. Create issue
-2. Create PR/MR
-3.
+2. Create Pull/Merge Request
+3. (To be continued...)
+
+---
+
+*Last updated: January 2026*
