@@ -2,7 +2,6 @@
 stages:
   - build
   - test
-  - ai
 
 # Build stage
 build_job:
@@ -26,29 +25,4 @@ test_job:
   rules:
     - if: '$CI_MERGE_REQUEST_ID' # This will trigger the job for merge requests
 
-claude:
-  stage: ai
-  tags:
-    - one-sigma-server--runner
-  image: node:24-alpine3.21
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "web"'
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-  variables:
-    GIT_STRATEGY: fetch
-    GITLAB_ACCESS_TOKEN: $CI_JOB_TOKEN  # Add this line!
-  before_script:
-    - apk update
-    - apk add --no-cache git curl bash
-    - npm install -g @anthropic-ai/claude-code
-  script:
-    - /bin/gitlab-mcp-server || true
-    - >
-      claude
-      -p "${AI_FLOW_INPUT:-'Summarize recent changes and suggest improvements'}"
-      --permission-mode acceptEdits
-      --allowedTools "Bash(*) Read(*) Edit(*) Write(*) mcp__gitlab"
-      --debug
-  # Claude Code will use ANTHROPIC_API_KEY from CI/CD variables
-      
 
